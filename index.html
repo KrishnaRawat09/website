@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharat Fincare - NBFC Support Partner</title>
+
+    <!-- Fonts: Inter (Professional, Clean) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Three.js (CDN for now, can move to local if preferred) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body>
+
+
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="sequence-container">
+            <!-- Frame 1: Core Dot -->
+            <svg class="seq-frame" id="frame-1" viewBox="0 0 100 100" width="120" height="120">
+                <circle cx="50" cy="50" r="10" fill="#f97316" />
+            </svg>
+
+            <!-- Frame 2: Core + Ring -->
+            <svg class="seq-frame" id="frame-2" viewBox="0 0 100 100" width="120" height="120">
+                <circle cx="50" cy="50" r="10" fill="#f97316" />
+                <circle cx="50" cy="50" r="20" fill="none" stroke="white" stroke-width="2" />
+            </svg>
+
+            <!-- Frame 3: Expanding Ring -->
+            <svg class="seq-frame" id="frame-3" viewBox="0 0 100 100" width="120" height="120">
+                <circle cx="50" cy="50" r="10" fill="#f97316" />
+                <circle cx="50" cy="50" r="30" fill="none" stroke="white" stroke-width="2" />
+            </svg>
+
+            <!-- Frame 4: Crosshairs -->
+            <svg class="seq-frame" id="frame-4" viewBox="0 0 100 100" width="120" height="120">
+                <circle cx="50" cy="50" r="10" fill="#f97316" />
+                <circle cx="50" cy="50" r="30" fill="none" stroke="white" stroke-width="2" />
+                <line x1="50" y1="10" x2="50" y2="90" stroke="#f97316" stroke-width="2" />
+                <line x1="10" y1="50" x2="90" y2="50" stroke="#f97316" stroke-width="2" />
+            </svg>
+
+            <!-- Frame 5: Rotation 45deg -->
+            <svg class="seq-frame" id="frame-5" viewBox="0 0 100 100" width="120" height="120">
+                <g transform="rotate(45, 50, 50)">
+                    <rect x="35" y="35" width="30" height="30" fill="none" stroke="#f97316" stroke-width="3" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="white" stroke-width="1" />
+                </g>
+            </svg>
+
+            <!-- Frame 6: Square Fill -->
+            <svg class="seq-frame" id="frame-6" viewBox="0 0 100 100" width="120" height="120">
+                <g transform="rotate(45, 50, 50)">
+                    <rect x="30" y="30" width="40" height="40" fill="#f97316" opacity="0.5" />
+                    <rect x="30" y="30" width="40" height="40" fill="none" stroke="white" stroke-width="2" />
+                </g>
+            </svg>
+
+            <!-- Frame 7: Complex Lock -->
+            <svg class="seq-frame" id="frame-7" viewBox="0 0 100 100" width="120" height="120">
+                <g transform="rotate(90, 50, 50)">
+                    <rect x="25" y="25" width="50" height="50" fill="none" stroke="white" stroke-width="2" />
+                    <circle cx="50" cy="50" r="15" fill="#f97316" />
+                    <path d="M50 0 L50 20 M50 80 L50 100 M0 50 L20 50 M80 50 L100 50" stroke="#f97316"
+                        stroke-width="4" />
+                </g>
+            </svg>
+
+            <!-- Frame 8: Final Lock (Logo Shape Simulation) -->
+            <svg class="seq-frame" id="frame-8" viewBox="0 0 100 100" width="120" height="120">
+                <rect x="20" y="20" width="60" height="60" rx="10" fill="none" stroke="#f97316" stroke-width="4" />
+                <circle cx="50" cy="50" r="20" fill="white" />
+            </svg>
+        </div>
+
+        <div class="preloader-content" id="final-brand">
+            <img src="logo.png" alt="Bharat Fincare" class="preloader-logo">
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- THE CANVAS: Fixed Background -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- UI LAYER: Everything here floats ON TOP of the 3D world -->
+    <div id="ui-layer">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="container header-inner">
+                <a href="#" class="logo-link">
+                    <img src="logo.png" alt="Bharat Fincare Logo" class="logo-img">
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link" style="color: var(--color-primary);">Home</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container hero-content">
+                <h1 class="hero-title">
+                    <span id="hero-line1-text">We Handle the </span><span id="hero-line1-gradient"
+                        class="text-gradient">Operations</span><br>
+                    <span id="hero-line2-text">You Handle the </span><span id="hero-line2-gradient"
+                        class="text-gradient">Growth</span><span id="hero-dot" class="text-gradient"
+                        style="opacity: 0;">.</span>
+                </h1>
+                <p class="hero-subtitle" id="hero-subtitle">
+                    The invisible engine behind India's fastest-growing NBFCs. From field verification to back-office
+                    processing, we are your boots on the ground.
+                </p>
+                <div class="hero-actions" id="hero-buttons">
+                    <button class="btn btn-primary" onclick="window.location.href='services.html'">Our
+                        Services</button>
+                    <button class="btn btn-outline" onclick="window.location.href='contact.html'">Partner
+                        With Us</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who We Are -->
+        <section id="who-we-are" class="section">
+            <div class="container">
+                <div class="split-layout">
+                    <div class="visual-box"
+                        style="background-image: url('assets/office-team.jpg'); background-size: cover; background-position: center;">
+                        <!-- Placeholder if image doesn't exist, style handles fallback -->
+                    </div>
+                    <div class="text-content">
+                        <h2 class="section-title swipe-reveal-text">Who We Are</h2>
+                        <h4 class="section-subtitle"
+                            style="margin-bottom: 20px; display: block; color: var(--color-primary);">Execution at Scale
+                        </h4>
+                        <p class="section-text">
+                            Bharat Fincare is a specialized B2B services company built to solve one of the biggest
+                            challenges in financial services — <strong>execution at scale</strong>.
+                        </p>
+                        <p class="section-text">
+                            We operate as the extended operations arm for NBFCs, banks, and fintech companies by
+                            deploying trained manpower, managing field and back-office processes, and running critical
+                            workflows such as onboarding, KYC, field investigation, collections, and backend operations.
+                        </p>
+                        <p class="section-text">
+                            Unlike typical staffing or BPO companies, we don’t just provide people — we take ownership
+                            of outcomes, processes, and performance. Our teams work inside your systems, your SOPs, and
+                            your compliance framework to deliver predictable, auditable, and scalable execution.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Do -->
+        <section id="what-we-do" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title swipe-reveal-text">What We Do</h2>
+                    <p class="section-subtitle">We manage the operational backbone of lending and financial services
+                        businesses.</p>
+                </div>
+                <!-- Grid of Capabilities -->
+                <div class="grid grid-3">
+                    <!-- Service 1 -->
+                    <div class="card">
+                        <div class="card-icon">🧑‍💼</div>
+                        <h3 class="card-title">Manpower Outsourcing</h3>
+                        <p class="card-text">
+                            Deployment of trained field executives, telecallers, sales staff, verification officers, and
+                            back-office teams purpose-built for NBFC operations.
+                        </p>
+                    </div>
+                    <!-- Service 2 -->
+                    <div class="card">
+                        <div class="card-icon">🏦</div>
+                        <h3 class="card-title">NBFC Process Management</h3>
+                        <p class="card-text">
+                            End-to-end handling of onboarding, KYC, FI, document collection, loan processing, CRM
+                            operations, and workflow execution.
+                        </p>
+                    </div>
+                    <!-- Service 3 -->
+                    <div class="card">
+                        <div class="card-icon">📞</div>
+                        <h3 class="card-title">Collections & Recovery</h3>
+                        <p class="card-text">
+                            Soft collections, field collections, portfolio support, and structured follow-up operations
+                            aligned to regulatory and brand guidelines.
+                        </p>
+                    </div>
+                    <!-- Service 4 -->
+                    <div class="card">
+                        <div class="card-icon">🗂</div>
+                        <h3 class="card-title">Back-Office Support</h3>
+                        <p class="card-text">
+                            Data processing, audit support, documentation, reconciliation, compliance ops, and
+                            operational reporting.
+                        </p>
+                    </div>
+                    <!-- Service 5 -->
+                    <div class="card">
+                        <div class="card-icon">🚀</div>
+                        <h3 class="card-title">Loan Origination Support</h3>
+                        <p class="card-text">
+                            From lead sourcing coordination to disbursement-stage operational execution.
+                        </p>
+                    </div>
+                    <!-- Service 6 -->
+                    <div class="card">
+                        <div class="card-icon">💻</div>
+                        <h3 class="card-title">Tech & Workflow Enablement</h3>
+                        <p class="card-text">
+                            CRM operations, dashboards, process automation, and execution tracking.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Bharat Fincare -->
+        <section id="why-us" class="section"
+            style="background: linear-gradient(180deg, transparent 0%, rgba(249, 115, 22, 0.05) 50%, transparent 100%);">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title swipe-reveal-text">Why Bharat Fincare</h2>
+                    <p class="section-subtitle">Built for NBFC-scale execution</p>
+                </div>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h3 class="card-title" style="color: var(--color-primary);">Process-Embedded</h3>
+                        <p class="card-text">We operate <strong>inside</strong> your process, not outside it. We
+                            function as an extension of your own team.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title" style="color: var(--color-primary);">Outcome Ownership</h3>
+                        <p class="card-text">We don’t just supply manpower — we run operations. We take ownership of
+                            SLAs and TATs.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title" style="color: var(--color-primary);">Compliance First</h3>
+                        <p class="card-text">Our operations are designed with strict adherence to compliance and
+                            regulatory frameworks.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title" style="color: var(--color-primary);">Cost Efficiency</h3>
+                        <p class="card-text">Reduce operational overhead and management bandwidth. Deployment-ready
+                            resources from Day 1.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who We Serve (Camera Roll Animation) -->
+        <section id="who-we-serve" class="section" style="padding-bottom: 0;">
+            <div class="container" style="margin-bottom: 40px;">
+                <h2 class="section-title swipe-reveal-text" style="text-align: center;">Who We Work With</h2>
+            </div>
+
+            <div class="camera-roll-wrapper">
+                <div class="camera-roll-track">
+                    <!-- Duplicate items for infinite scroll illusion -->
+                    <div class="camera-roll-item">NBFCs</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">Banks</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">Fintech Lending Platforms</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">Digital Credit Companies</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">Financial Institutions</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">B2B Lending</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">Embedded Finance</div>
+                    <div class="camera-roll-item">·</div>
+                    <!-- Repeat -->
+                    <div class="camera-roll-item">NBFCs</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">Banks</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">Fintech Lending Platforms</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">Digital Credit Companies</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">Financial Institutions</div>
+                    <div class="camera-roll-item">·</div>
+                    <div class="camera-roll-item">B2B Lending</div>
+                    <h1 style="color: rgba(255,255,255,0.1); font-size: 80px; line-height: 0.8; margin-bottom: -40px;">
+                        01</h1>
+                    <h3 class="card-title" style="margin-top: 40px;">Process Study & Mapping</h3>
+                    <p class="card-text">We understand your existing workflows, SOPs, and compliance requirements to
+                        design a seamless integration plan.</p>
+                </div>
+                <div class="card">
+                    <h1 style="color: rgba(255,255,255,0.1); font-size: 80px; line-height: 0.8; margin-bottom: -40px;">
+                        02</h1>
+                    <h3 class="card-title" style="margin-top: 40px;">Team Deployment</h3>
+                    <p class="card-text">We deploy trained resources (field, calling, back-office) pre-vetted for your
+                        specific domain needs.</p>
+                </div>
+                <div class="card">
+                    <h1 style="color: rgba(255,255,255,0.1); font-size: 80px; line-height: 0.8; margin-bottom: -40px;">
+                        03</h1>
+                    <h3 class="card-title" style="margin-top: 40px;">System Integration</h3>
+                    <p class="card-text">Our teams plug directly into your CRM, LOS, and collections modules to work as
+                        an internal unit.</p>
+                </div>
+                <div class="card">
+                    <h1 style="color: rgba(255,255,255,0.1); font-size: 80px; line-height: 0.8; margin-bottom: -40px;">
+                        04</h1>
+                    <h3 class="card-title" style="margin-top: 40px;">Governance & SLAs</h3>
+                    <p class="card-text">We operate on strict TATs and SLAs with regular reporting and quality audits.
+                    </p>
+                </div>
+            </div>
+    </div>
+    </section>
+
+    <!-- End-to-End Coverage Diagram -->
+    <section id="active-platforms" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title swipe-reveal-text">Our Active Platforms</h2>
+                <p class="section-subtitle">Empowering financial growth through our dedicated product lines.</p>
+            </div>
+            <div class="grid grid-2">
+                <!-- Platform 1 -->
+                <div class="card flow-animate">
+                    <h3 class="card-title">Next Big Loan</h3>
+                    <p class="card-text" style="margin-bottom: 24px;">
+                        Comprehensive lending solutions for significant financial milestones.
+                    </p>
+                    <a href="https://www.nextbigloan.com/" target="_blank" class="btn btn-outline"
+                        style="width: 100%; text-align: center;">Visit Website &rarr;</a>
+                </div>
+                <!-- Platform 2 -->
+                <div class="card flow-animate">
+                    <h3 class="card-title">Everyday Loan India</h3>
+                    <p class="card-text" style="margin-bottom: 24px;">
+                        Daily financial support bridging the gap for everyday needs.
+                    </p>
+                    <a href="https://www.everydayloanindia.com/" target="_blank" class="btn btn-outline"
+                        style="width: 100%; text-align: center;">Visit Website &rarr;</a>
+                </div>
+                <!-- Platform 3 -->
+                <div class="card flow-animate">
+                    <h3 class="card-title">Lending Rupee</h3>
+                    <p class="card-text" style="margin-bottom: 24px;">
+                        Streamlined rupee lending for quick and efficient capital access.
+                    </p>
+                    <a href="https://www.lendingrupee.com/" target="_blank" class="btn btn-outline"
+                        style="width: 100%; text-align: center;">Visit Website &rarr;</a>
+                </div>
+                <!-- Platform 4 -->
+                <div class="card flow-animate">
+                    <h3 class="card-title">Credit Pey</h3>
+                    <p class="card-text" style="margin-bottom: 24px;">
+                        Modern credit solutions designed for the digital economy.
+                    </p>
+                    <a href="https://www.creditpey.com/" target="_blank" class="btn btn-outline"
+                        style="width: 100%; text-align: center;">Visit Website &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End-to-End Coverage Diagram -->
+    <section id="coverage" class="section" style="background: rgba(255,255,255,0.02);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title swipe-reveal-text">Full Operational Lifecycle</h2>
+                <p class="section-subtitle">From lead to loan closure, we handle it all.</p>
+            </div>
+            <!-- Simple Diagrammatic Flow using Flexbox -->
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; text-align: center;">
+                <div class="flow-step btn btn-outline flow-animate" style="border-radius: 12px; cursor: default;">Lead
+                    Coordination</div>
+                <span class="flow-animate" style="align-self: center; color: var(--color-primary);">→</span>
+                <div class="flow-step btn btn-outline flow-animate" style="border-radius: 12px; cursor: default;">
+                    Onboarding</div>
+                <span class="flow-animate" style="align-self: center; color: var(--color-primary);">→</span>
+                <div class="flow-step btn btn-outline flow-animate" style="border-radius: 12px; cursor: default;">KYC &
+                    FI</div>
+                <span class="flow-animate" style="align-self: center; color: var(--color-primary);">→</span>
+                <div class="flow-step btn btn-outline flow-animate" style="border-radius: 12px; cursor: default;">
+                    Documentation</div>
+                <span class="flow-animate" style="align-self: center; color: var(--color-primary);">→</span>
+                <div class="flow-step btn btn-outline flow-animate" style="border-radius: 12px; cursor: default;">
+                    Processing</div>
+            </div>
+            <div
+                style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; text-align: center; margin-top: 20px;">
+                <!-- Second Row -->
+                <div class="flow-step btn btn-outline flow-animate" style="border-radius: 12px; cursor: default;">
+                    Disbursement Support</div>
+                <span class="flow-animate" style="align-self: center; color: var(--color-primary);">→</span>
+                <div class="flow-step btn btn-outline flow-animate" style="border-radius: 12px; cursor: default;">
+                    Collections</div>
+                <span class="flow-animate" style="align-self: center; color: var(--color-primary);">→</span>
+                <div class="flow-step btn btn-outline flow-animate" style="border-radius: 12px; cursor: default;">
+                    Back-office</div>
+                <span class="flow-animate" style="align-self: center; color: var(--color-primary);">→</span>
+                <div class="flow-step btn btn-outline flow-animate" style="border-radius: 12px; cursor: default;">
+                    Reporting</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title swipe-reveal-text">What Our Partners Say</h2>
+            </div>
+            <div class="grid grid-3">
+                <div class="card flow-animate">
+                    <p class="card-text" style="font-style: italic; margin-bottom: 20px;">
+                        "Bharat Fincare helped us stabilize and scale our field operations across multiple locations.
+                        Their strength is not just manpower, but process ownership and execution discipline."
+                    </p>
+                    <h4 style="color: white; font-weight: 700;">— COO</h4>
+                    <span style="font-size: 14px; color: var(--color-text-muted);">Mid-size NBFC</span>
+                </div>
+                <div class="card flow-animate">
+                    <p class="card-text" style="font-style: italic; margin-bottom: 20px;">
+                        "Their team works like an internal operations unit rather than a vendor. TAT and compliance
+                        improvement was visible within the first quarter."
+                    </p>
+                    <h4 style="color: white; font-weight: 700;">— Head of Operations</h4>
+                    <span style="font-size: 14px; color: var(--color-text-muted);">Fintech Lending Company</span>
+                </div>
+                <div class="card flow-animate">
+                    <p class="card-text" style="font-style: italic; margin-bottom: 20px;">
+                        "We were able to reduce operational overhead and improve collections efficiency after onboarding
+                        Bharat Fincare."
+                    </p>
+                    <h4 style="color: white; font-weight: 700;">— Director</h4>
+                    <span style="font-size: 14px; color: var(--color-text-muted);">Financial Services Company</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="section" style="padding: 0;">
+        <div class="container">
+            <div class="cta-box" style="text-align: center;">
+                <h2 class="section-title">Looking for a Reliable NBFC Operations Partner?</h2>
+                <p class="section-text" style="max-width: 600px; margin: 0 auto 32px;">
+                    Let’s discuss how Bharat Fincare can streamline, scale, and professionalize your operations.
+                </p>
+                <button class="btn btn-primary" onclick="window.location.href='contact.html'">Talk to Our
+                    Team</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="logo-text-small">Bharat Fincare Private Limited</span>
+                <p class="copyright">© 2024 Bharat Fincare Private Limited. All rights reserved.</p>
+                <!-- COMPLIANCE LINE -->
+                <p style="font-size: 12px; color: #555; margin-top: 16px; max-width: 400px; line-height: 1.4;">
+                    <strong>Disclaimer:</strong> Bharat Fincare is a service and outsourcing company. We are not an NBFC
+                    and do not provide loans or financial products.
+                </p>
+            </div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <a href="disclaimer.html">Disclaimer</a>
+                <a href="contact.html">Support</a>
+            </div>
+            <!-- Footer Socials -->
+            <div class="footer-socials" style="display: flex; gap: 16px; margin-left: 24px;">
+                <a href="https://www.instagram.com/bharat_fincare/" target="_blank" style="color: white;"><svg
+                        width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg></a>
+                <a href="https://x.com/Bharatfincare" target="_blank" style="color: white;"><svg width="20" height="20"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg></a>
+                <a href="https://www.facebook.com/people/Bharat-Fincare/100092439341987/" target="_blank"
+                    style="color: white;"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg></a>
+                <a href="https://www.youtube.com/channel/UC5YH1k-aJCRY7BJm-l9YfcQ" target="_blank"
+                    style="color: white;"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Social Sidebar (Left Side) -->
+    <!-- Floating Social Sidebar Removed -->
+    <!-- Floating Contact Trigger (Left Side) -->
+    <div id="contact-trigger" class="contact-trigger">
+        <div class="trigger-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white"
+                stroke="none">
+                <path
+                    d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.49-5.15-3.8-6.62-6.63l1.97-1.57c.26-.29.35-.69.24-1.07-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3.23 3 3.66 3 4.19c0 9.27 7.56 16.82 16.83 16.82.53 0 .98-.45.98-.98v-3.65c0-.54-.46-.99-.99-1z" />
+            </svg>
+        </div>
+        <span class="trigger-text">Contact</span>
+    </div>
+
+    <!-- Contact Drawer (Hidden Panel) -->
+    <div id="contact-drawer" class="contact-drawer">
+        <button id="drawer-close" class="drawer-close">&times;</button>
+        <div class="drawer-content">
+            <h3 class="drawer-title">Get in Touch</h3>
+
+            <div class="drawer-info">
+                <div class="info-group">
+                    <span class="info-label">Address</span>
+                    <p class="info-text">
+                        B-51, 3rd Floor, New Krishna Park,<br>
+                        Vikaspuri, New Delhi, Delhi 110018
+                    </p>
+                </div>
+
+                <div class="info-group">
+                    <span class="info-label">Email</span>
+                    <a href="mailto:info@bharatfincare.com" class="info-link">info@bharatfincare.com</a>
+                </div>
+
+                <div class="info-group">
+                    <span class="info-label">Phone</span>
+                    <a href="tel:+919494246969" class="info-link">+91-94942 46969</a>
+                </div>
+            </div>
+
+            <a href="contact.html" class="btn btn-primary btn-block"
+                style="text-align: center; margin-top: 24px;">Message Us</a>
+        </div>
+    </div>
+    </div>
+
+    <!-- Main Logic -->
+    <script src="main.js"></script>
+</body>
+
+</html>
